@@ -9,7 +9,7 @@
 \usepackage{wrapfig}
 \usepackage{float}
 \usepackage{parskip}
-\usepackage{hyperref}
+\usepackage{xurl}
 
 \babelprovide[import=el, main, onchar=ids fonts]{greek} % can also do import=el-polyton
 \babelprovide[import, onchar=ids fonts]{english}
@@ -23,6 +23,9 @@
 \babelfont{tt}
           [Language=Default]{Liberation Sans}
 
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\setlength{\emergencystretch}{3em}
+
 %Enter Title Here
 \title{Εργασία Υπολογιστική Νοημοσύνη\\Μέρος Α'}
 \author{Γρηγόρης Καπαδούκας (ΑΜ: 1072484)}
@@ -31,12 +34,50 @@
 \maketitle
 
 \setcounter{section}{-1}
-\section{Σύνδεσμος GitHub - Κώδικας Εργασίας}
+\section{Περιβάλλον Εργασίας - Σύνδεσμος GitHub με Κώδικα}
+Για την διεκπεραίωση αυτής της εργασίας έχω επιλέξει να χρησιμοποιήσω γλώσσα προγραμματισμού Python μαζί τις βιβλιοθήκες TensorFlow (κυρίως το API της, το Keras) για τον σχεδιασμό και την εκπαίδευση των νευρωνικών δικτύων και το Pandas με σκοπό τον χειρισμό του CSV αρχείου και της προεπεξεργασίας.
+
 Ο κώδικας που γράφτηκε για την εργασία βρίσκεται στο repository στον παρακάτω σύνδεσμο:
 
-
-
+\textcolor{blue}{\url{https://github.com/GregKapadoukas/University-Computational-Intelligence-Project-A}}
 \section{Προεπεξεργασία και Προετοιμασία Δεδομένων}
-%Insert Body Here
+
+\subsection{Κωδικοποίηση και προεπεξεργασία δεδομένων}
+
+\subsubsection{Διάβασμα του CSV αρχείου και μετατροπή κατηγορικών δεδομένων σε αριθμητικά}
+Αρχικά, με σκοπό το διάβασμα του dataset στη μορφή του CSV αρχείου χρησιμοποιώ εντολές της βιβλιοθήκης Pandas για φορτώσω τα δεδομένα στη μορφή ενός DataFrame. Έπειτα χωρίζω το αρχικό DataFrame σε δύο, από τα οποία το πρώτο περιέχει τα δεδομένα των αισθητήρων και τα στοιχεία του ατόμου πάνω στο οποίο έγιναν οι μετρήσεις και το δεύτερο περιέχει την κλάση δραστηριότητας στην οποία ανήκει το άτομο.
+
+Έπειτα μετατρέπω τα κατηγορικά δεδομένα των κλάσεων του δεύτερου DataFrame σε αριθμητικά δεδομένα, τα οποία όμως είναι one-hot encoded διανύσματα μεγέθους $\mathbb{R}\textsuperscript{1\times5}$. Άρα οι τιμές μετατρέπονται σε διανύσματα με την εξής αντιστοίχηση:
+
+\begin{itemize}
+    \item 'sitting': [1 0 0 0 0]
+    \item 'sitting-down': [0 1 0 0 0]
+    \item 'standing': [0 0 1 0 0]
+    \item 'standing-up': [0 0 0 1 0]
+    \item 'walking': [0 0 0 0 1]
+\end{itemize}
+
+Επέλεξα την παραπάνω one-hot encoded προσέγγιση αντί για την αριθμητική 1-5 όπως προτείνεται στην εκφώνηση, επειδή σκοπεύω να έχω 5 εξόδους στο νευρωνικό δίκτυο, όπως θα εξηγήσω στο κεφάλαιο \ref{Επιλογή Αρχιτεκτονικής}.
+
+Έπειτα μετατρέπω και τα κατηγορικά δεδομένα του δεύτερου DataFrame, δηλαδή τα series 'Name' και 
+'Gender' σε αριθμητικά δεδομένα, με βάση την εξής αντιστοίχηση.
+
+Για τα ονόματα:
+\begin{itemize}
+    \item 'debora': 1
+    \item 'katia': 2
+    \item 'wallace': 3
+    \item 'jose\_carlos': 4
+\end{itemize}
+Για το φύλλο:
+\begin{itemize}
+    \item 'Man': 1
+    \item 'Woman': 2
+\end{itemize}
+
+Έτσι πλέον έχω μετατρέψει όλα τα κατηγορικά δεδομένα σε αριθμητικά, το οποίο είναι αναγκαίο για να μπορέσει να γίνει η μετέπειτα προεπεξεργασία των δεδομένων και η χρήση τους για την εκπαίδευση του νευρωνικού δικτύου.
+
+\section{Επιλογή Αρχιτεκτονικής}
+\label{Επιλογή Αρχιτεκτονικής}
 
 \end{document}
