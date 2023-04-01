@@ -45,7 +45,7 @@ print(sensor_measurements)
 # Normalization of input data
 
 for column in sensor_measurements.columns:
-    sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].min()) / (sensor_measurements[column].max() - sensor_measurements[column].min())    
+    sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].min()) / (sensor_measurements[column].max() - sensor_measurements[column].min())
 print(sensor_measurements)
 
 # Standardization of input data
