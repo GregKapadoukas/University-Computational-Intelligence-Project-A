@@ -8,6 +8,7 @@ from keras import layers
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import KFold
+from sklearn.preprocessing import MinMaxScaler
 
 # Read CSV File With Pandas
 
@@ -29,32 +30,33 @@ sensor_classes = sensor_measurements.pop("Class")
 # One-hot encode output to use in the model later
 
 sensor_classes = pd.get_dummies(df['Class'])
-print(sensor_classes)
+sensor_classes
 
 # Convert categorical values in the inputs to arithmetical values
 
 sensor_measurements['User'] = sensor_measurements['User'].map({'debora':1, 'katia':2, 'wallace':3, 'jose_carlos':4})
 sensor_measurements['Gender'] = sensor_measurements['Gender'].map({'Man':1, 'Woman':2})
-print(sensor_measurements)
+sensor_measurements
 
 # Centering of input data
 
-sensor_measurements = sensor_measurements.apply(lambda x: x-x.mean())
-print(sensor_measurements)
+# +
+#sensor_measurements = sensor_measurements.apply(lambda x: x-x.mean())
+#print(sensor_measurements)
+# -
 
 # Normalization of input data
 
-for column in sensor_measurements.columns:
-    sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].min()) / (sensor_measurements[column].max() - sensor_measurements[column].min())    
-print(sensor_measurements)
+# +
+#scaler = MinMaxScaler(feature_range=(-1, 1))
+#sensor_measurements = pd.DataFrame(scaler.fit_transform(sensor_measurements), columns=sensor_measurements.columns)
+# -
 
 # Standardization of input data
 
-# +
-#for column in sensor_measurements.columns:
-#    sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].mean()) / (sensor_measurements[column].std())    
-#print(sensor_measurements)
-# -
+for column in sensor_measurements.columns:
+    sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].mean()) / (sensor_measurements[column].std())    
+sensor_measurements
 
 # Merge back measurements and classes and split data for CV (5-fold)
 
@@ -99,5 +101,5 @@ model.compile(
 
 # Train the model and evaluate
 
-model.fit(train_measurements, train_classes, batch_size=32, epochs=5, verbose=2)
+model.fit(train_measurements, train_classes, batch_size=32, epochs=20, verbose=2)
 model.evaluate(test_measurements, test_classes, batch_size=32, verbose=2)
