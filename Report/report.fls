@@ -179,6 +179,12 @@ INPUT /usr/share/texmf-dist/tex/latex/xurl/xurl.sty
 INPUT /usr/share/texmf-dist/tex/latex/url/url.sty
 INPUT /usr/share/texmf-dist/tex/latex/url/url.sty
 INPUT /usr/share/texmf-dist/tex/latex/url/url.sty
+INPUT /usr/share/texmf-dist/tex/latex/caption/caption.sty
+INPUT /usr/share/texmf-dist/tex/latex/caption/caption.sty
+INPUT /usr/share/texmf-dist/tex/latex/caption/caption.sty
+INPUT /usr/share/texmf-dist/tex/latex/caption/caption3.sty
+INPUT /usr/share/texmf-dist/tex/latex/caption/caption3.sty
+INPUT /usr/share/texmf-dist/tex/latex/caption/caption3.sty
 INPUT /usr/share/texmf-dist/tex/generic/babel/locale/el/babel-el.ini
 INPUT /usr/share/texmf-dist/tex/generic/hyph-utf8/loadhyph/loadhyph-el-monoton.tex
 INPUT /usr/share/texmf-dist/tex/generic/hyph-utf8/patterns/tex/hyph-el-monoton.tex
@@ -214,4 +220,31 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/lmmi10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/lmmi7.tfm
 OUTPUT report.pdf
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
+INPUT ./1. CCE vs MSE - CCE Loss - 5 Neurons.png
+INPUT ./1. CCE vs MSE - CCE Loss - 5 Neurons.png
+INPUT ./1. CCE vs MSE - CCE Loss - 5 Neurons.png
+INPUT ./2. CCE vs MSE - MSE Loss - 5 Neurons.png
+INPUT ./2. CCE vs MSE - MSE Loss - 5 Neurons.png
+INPUT ./2. CCE vs MSE - MSE Loss - 5 Neurons.png
+INPUT ./3. CCE vs MSE - Accuracy - 5 Neurons.png
+INPUT ./3. CCE vs MSE - Accuracy - 5 Neurons.png
+INPUT ./3. CCE vs MSE - Accuracy - 5 Neurons.png
+INPUT ./4. CCE vs MSE - CCE Loss - 12 Neurons.png
+INPUT ./4. CCE vs MSE - CCE Loss - 12 Neurons.png
+INPUT ./4. CCE vs MSE - CCE Loss - 12 Neurons.png
+INPUT ./5. CCE vs MSE - MSE Loss - 12 Neurons.png
+INPUT ./5. CCE vs MSE - MSE Loss - 12 Neurons.png
+INPUT ./5. CCE vs MSE - MSE Loss - 12 Neurons.png
+INPUT ./6. CCE vs MSE - Accuracy - 12 Neurons.png
+INPUT ./6. CCE vs MSE - Accuracy - 12 Neurons.png
+INPUT ./6. CCE vs MSE - Accuracy - 12 Neurons.png
+INPUT ./7. CCE vs MSE - CCE Loss - 23 Neurons.png
+INPUT ./7. CCE vs MSE - CCE Loss - 23 Neurons.png
+INPUT ./7. CCE vs MSE - CCE Loss - 23 Neurons.png
+INPUT ./8. CCE vs MSE - MSE Loss - 23 Neurons.png
+INPUT ./8. CCE vs MSE - MSE Loss - 23 Neurons.png
+INPUT ./8. CCE vs MSE - MSE Loss - 23 Neurons.png
+INPUT ./9. CCE vs MSE - Accuracy - 23 Neurons.png
+INPUT ./9. CCE vs MSE - Accuracy - 23 Neurons.png
+INPUT ./9. CCE vs MSE - Accuracy - 23 Neurons.png
 INPUT ./report.aux
