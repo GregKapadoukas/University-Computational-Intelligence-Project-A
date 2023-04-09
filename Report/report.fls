@@ -1,4 +1,4 @@
-PWD /home/greg/University-Machine-Learning/Report
+PWD /home/greg/University-Computational-Intelligence/Report
 INPUT /var/lib/texmf/web2c/luahbtex/lualatex.fmt
 INPUT ./report.tex
 OUTPUT report.log
@@ -247,4 +247,46 @@ INPUT ./8. CCE vs MSE - MSE Loss - 23 Neurons.png
 INPUT ./9. CCE vs MSE - Accuracy - 23 Neurons.png
 INPUT ./9. CCE vs MSE - Accuracy - 23 Neurons.png
 INPUT ./9. CCE vs MSE - Accuracy - 23 Neurons.png
+INPUT ./10. CCE vs MSE - CCE Loss - 5 Neurons - Mean.png
+INPUT ./10. CCE vs MSE - CCE Loss - 5 Neurons - Mean.png
+INPUT ./10. CCE vs MSE - CCE Loss - 5 Neurons - Mean.png
+INPUT ./11. CCE vs MSE - MSE Loss - 5 Neurons - Mean.png
+INPUT ./11. CCE vs MSE - MSE Loss - 5 Neurons - Mean.png
+INPUT ./11. CCE vs MSE - MSE Loss - 5 Neurons - Mean.png
+INPUT ./12. CCE vs MSE - Accuracy - 5 Neurons - Mean.png
+INPUT ./12. CCE vs MSE - Accuracy - 5 Neurons - Mean.png
+INPUT ./12. CCE vs MSE - Accuracy - 5 Neurons - Mean.png
+INPUT ./13. CCE vs MSE - CCE Loss - 12 Neurons - Mean.png
+INPUT ./13. CCE vs MSE - CCE Loss - 12 Neurons - Mean.png
+INPUT ./13. CCE vs MSE - CCE Loss - 12 Neurons - Mean.png
+INPUT ./14. CCE vs MSE - MSE Loss - 12 Neurons - Mean.png
+INPUT ./14. CCE vs MSE - MSE Loss - 12 Neurons - Mean.png
+INPUT ./14. CCE vs MSE - MSE Loss - 12 Neurons - Mean.png
+INPUT ./15. CCE vs MSE - Accuracy - 12 Neurons - Mean.png
+INPUT ./15. CCE vs MSE - Accuracy - 12 Neurons - Mean.png
+INPUT ./15. CCE vs MSE - Accuracy - 12 Neurons - Mean.png
+INPUT ./16. CCE vs MSE - CCE Loss - 23 Neurons - Mean.png
+INPUT ./16. CCE vs MSE - CCE Loss - 23 Neurons - Mean.png
+INPUT ./16. CCE vs MSE - CCE Loss - 23 Neurons - Mean.png
+INPUT ./17. CCE vs MSE - MSE Loss - 23 Neurons - Mean.png
+INPUT ./17. CCE vs MSE - MSE Loss - 23 Neurons - Mean.png
+INPUT ./17. CCE vs MSE - MSE Loss - 23 Neurons - Mean.png
+INPUT ./18. CCE vs MSE - Accuracy - 23 Neurons - Mean.png
+INPUT ./18. CCE vs MSE - Accuracy - 23 Neurons - Mean.png
+INPUT ./18. CCE vs MSE - Accuracy - 23 Neurons - Mean.png
+INPUT ./19. Train vs Validation Fold 1.png
+INPUT ./19. Train vs Validation Fold 1.png
+INPUT ./19. Train vs Validation Fold 1.png
+INPUT ./20. Train vs Validation Fold 2.png
+INPUT ./20. Train vs Validation Fold 2.png
+INPUT ./20. Train vs Validation Fold 2.png
+INPUT ./21. Train vs Validation Fold 3.png
+INPUT ./21. Train vs Validation Fold 3.png
+INPUT ./21. Train vs Validation Fold 3.png
+INPUT ./22. Train vs Validation Fold 4.png
+INPUT ./22. Train vs Validation Fold 4.png
+INPUT ./22. Train vs Validation Fold 4.png
+INPUT ./23. Train vs Validation Fold 5.png
+INPUT ./23. Train vs Validation Fold 5.png
+INPUT ./23. Train vs Validation Fold 5.png
 INPUT ./report.aux
