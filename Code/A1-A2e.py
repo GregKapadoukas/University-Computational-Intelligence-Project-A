@@ -1,4 +1,4 @@
-# Import necessary libraries
+#Import necessary libraries
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -12,70 +12,59 @@ from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 import keras.backend as kb
 
-# Read CSV File With Pandas
-
+#Read CSV File With Pandas
 df = pd.read_csv(
         "dataset-HAR-PUC-Rio.csv",
         names=["User","Gender","Age","Height","Weight","BMI","x1","y1","z1","x2","y2","z2","x3","y3","z3","x4","y4","z4","Class"],
         delimiter=';',
-        #Η γραμμή 0 εξηγεί τις στήλες και η γραμμή 122078 έχει λάθος
+        #Line 0 contains information about the columns and line 122078 has a mistake
         skiprows=[0,122077],
         decimal=','
 )
 
-# Separate inputs and known correct output
-
+#Separate inputs and known correct output
 sensor_measurements = df.copy()
 sensor_classes = sensor_measurements.pop("Class")
 
-
-# One-hot encode output to use in the model later
-
+#One-hot encode output to use in the model later
 sensor_classes = pd.get_dummies(df['Class'])
-sensor_classes
 
-# Convert categorical values in the inputs to arithmetical values
-
+#Convert categorical values in the inputs to arithmetical values
 sensor_measurements['User'] = sensor_measurements['User'].map({'debora':1, 'katia':2, 'wallace':3, 'jose_carlos':4})
 sensor_measurements['Gender'] = sensor_measurements['Gender'].map({'Man':1, 'Woman':2})
-sensor_measurements
 
-# Centering of input data
-
-# +
+#Centering of input data
 #sensor_measurements = sensor_measurements.apply(lambda x: x-x.mean())
-#print(sensor_measurements)
-# -
 
-# Normalization of input data
-
-# +
+#Normalization of input data
 #scaler = MinMaxScaler(feature_range=(-1, 1))
 #sensor_measurements = pd.DataFrame(scaler.fit_transform(sensor_measurements), columns=sensor_measurements.columns)
-# -
 
-# Standardization of input data
-
+#Standardization of input data
 for column in sensor_measurements.columns:
     sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].mean()) / (sensor_measurements[column].std())    
-sensor_measurements
 
+#Set number of neurons in hidden layer and number of epochs
 num_hidden_neurons = 23
 num_epochs = 10
 
-# +
+#Join measurements and classes again in order to split for 5-fold CV
 preprocessed_df = pd.concat([sensor_measurements, sensor_classes], axis=1)
-
 kf = KFold(n_splits = 5, shuffle = True, random_state = 101)
-#result = next(kf.split(preprocessed_df))
+
+#Store fold number
 num_fold = 0
 
+#Store fit and evaluation results for each fold
 model1_fit_history = []
 model2_fit_history = []
 model1_evaluate_history = []
 model2_evaluate_history = []
 
+#Run once for each fold
 for result in kf.split(preprocessed_df):
+
+    #Define model trained with CCE
     model1 = keras.Sequential(
         [
             keras.Input(shape=(18)),
@@ -85,14 +74,14 @@ for result in kf.split(preprocessed_df):
     )
     model1.summary()
 
-    # Choose loss function, optimizers, learning rate and metrics
-
+    #Choose loss function, optimizers, learning rate and metrics
     model1.compile(
         loss = keras.losses.CategoricalCrossentropy(),
         optimizer = keras.optimizers.Adam(learning_rate = 0.001),
         metrics = ["categorical_crossentropy", "mse", "categorical_accuracy"]
     )
 
+    #Define model trained with MSE
     model2 = keras.Sequential(
         [
             keras.Input(shape=(18)),
@@ -103,19 +92,15 @@ for result in kf.split(preprocessed_df):
 
     model2.summary()
 
-    # Choose loss function, optimizers, learning rate and metrics
-
+    #Choose loss function, optimizers, learning rate and metrics
     model2.compile(
         loss = keras.losses.MeanSquaredError(),
         optimizer = keras.optimizers.Adam(learning_rate = 0.001),
         metrics = ["categorical_crossentropy", "mse", "categorical_accuracy"]
     )
 
-    # -
 
-    # Split data again into measurements and classes
-
-    # +
+    #Split data again into measurements and classes
     train = preprocessed_df.iloc[result[0]]
     validation =  preprocessed_df.iloc[result[1]]
 
@@ -124,13 +109,8 @@ for result in kf.split(preprocessed_df):
 
     validation_measurements = validation.iloc[:,:18]
     validation_classes = validation.iloc[:,18:]
-    # -
 
-    # Create neural network model with keras sequencial API
-        
-    #def CategoricalAccuracy(y_true, y_pred):
-    #    return kb.cast(kb.equal(kb.argmax(y_true, axis=-1), kb.argmax(y_pred, axis=-1)), kb.floatx())
-
+    #Train the models and evaluate
     print("Fold " + str(num_fold+1))
     print("Model trained with CCE")
     model1_fit_history.append(model1.fit(train_measurements, train_classes, batch_size=32, epochs=num_epochs, verbose=2))
@@ -143,10 +123,10 @@ for result in kf.split(preprocessed_df):
     print("MSE Trained Model")
     model2_evaluate_history.append(model2.evaluate(validation_measurements, validation_classes, batch_size=32, verbose=2))
 
+    #Add one to fold number for next iteration
     num_fold = num_fold + 1
-model1_evaluate_history
 
-# +
+#Calculate and print mean values for evaluations for all folds
 model1_categorical_crossentropy = 0
 model1_mse = 0
 model1_categorical_accuracy = 0
@@ -188,7 +168,6 @@ plt.title('Categorical CE vs MSE Trained NN - CCE Loss with ' + str(num_hidden_n
 plt.ylabel('CCE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, num_epochs, 1)
-#plt.xticks(x + 1)
 plt.xlim(1,num_epochs)
 plt.legend(['CCE for CCE Trained NN Fold 1',
             'CCE for CCE Trained NN Fold 2',
@@ -219,7 +198,6 @@ plt.title('Categorical CE vs MSE Trained NN - MSE Loss with ' + str(num_hidden_n
 plt.ylabel('MSE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, num_epochs, 1)
-#plt.xticks(x + 1)
 plt.xlim(1,num_epochs)
 plt.legend(['MSE for CCE Trained NN Fold 1',
             'MSE for CCE Trained NN Fold 2',
@@ -303,7 +281,6 @@ plt.title('Mean Fold MSE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hi
 plt.ylabel('MSE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, num_epochs, 1)
-#plt.xticks(x + 1)
 plt.xlim(1,num_epochs)
 plt.legend(['Mean Fold MSE for CCE Trained NN',
             'Mean Fold MSE for MSE Trained NN'])
@@ -325,7 +302,6 @@ plt.title('Mean Fold Accuracy with ' + str(num_hidden_neurons) + ' Neurons in Hi
 plt.ylabel('CCE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, num_epochs, 1)
-#plt.xticks(x + 1)
 plt.xlim(1,num_epochs)
 plt.legend(['Mean Fold Accuracy for CCE Trained NN',
             'Mean Fold Accuracy for MSE Trained NN'])
