@@ -11,6 +11,7 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 import keras.backend as kb
+from tensorflow.keras import regularizers
 
 # Read CSV File With Pandas
 
@@ -57,9 +58,7 @@ sensor_measurements['Gender'] = sensor_measurements['Gender'].map({'Man':1, 'Wom
 for column in sensor_measurements.columns:
     sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].mean()) / (sensor_measurements[column].std())    
 
-num_l1_hidden_neurons = 23
-num_l2_hidden_neurons = 20
-num_l3_hidden_neurons = 18
+num_hidden_neurons = 23
 num_epochs = 100
 
 # +
@@ -77,9 +76,7 @@ for result in kf.split(preprocessed_df):
     model = keras.Sequential(
         [
             keras.Input(shape=(18)),
-            layers.Dense(num_l1_hidden_neurons, activation='relu'),
-            layers.Dense(num_l2_hidden_neurons, activation='relu'),
-            layers.Dense(num_l3_hidden_neurons, activation='relu'),
+            layers.Dense(num_hidden_neurons, activation='relu', kernel_regularizer=regularizers.L2(l2=0.1)),
             layers.Dense(5, activation='softmax')
         ]
     )
@@ -228,7 +225,7 @@ plt.plot(model_fit_history[1].history['val_categorical_crossentropy'])
 plt.plot(model_fit_history[2].history['val_categorical_crossentropy'])
 plt.plot(model_fit_history[3].history['val_categorical_crossentropy'])
 plt.plot(model_fit_history[4].history['val_categorical_crossentropy'])
-plt.title('CCE Loss with Deep Neural Network')
+plt.title('CCE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
 plt.ylabel('CCE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, max(fold_epochs), 1)
@@ -249,7 +246,7 @@ plt.plot(model_fit_history[1].history['val_mse'])
 plt.plot(model_fit_history[2].history['val_mse'])
 plt.plot(model_fit_history[3].history['val_mse'])
 plt.plot(model_fit_history[4].history['val_mse'])
-plt.title('MSE Loss with Deep Neural Network')
+plt.title('MSE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
 plt.ylabel('MSE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, max(fold_epochs), 1)
@@ -270,7 +267,7 @@ plt.plot(model_fit_history[1].history['val_categorical_accuracy'])
 plt.plot(model_fit_history[2].history['val_categorical_accuracy'])
 plt.plot(model_fit_history[3].history['val_categorical_accuracy'])
 plt.plot(model_fit_history[4].history['val_categorical_accuracy'])
-plt.title('Accuracy with Deep Neural Network')
+plt.title('Accuracy with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
 x = np.arange(0, max(fold_epochs), 1)

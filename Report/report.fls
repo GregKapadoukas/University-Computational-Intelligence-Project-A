@@ -310,4 +310,15 @@ INPUT ./29. L2 with r = 0.5.png
 INPUT ./30. L2 with r = 0.9.png
 INPUT ./30. L2 with r = 0.9.png
 INPUT ./30. L2 with r = 0.9.png
+INPUT ./31. hidden layers 12 - 8 - 5.png
+INPUT ./31. hidden layers 12 - 8 - 5.png
+INPUT ./31. hidden layers 12 - 8 - 5.png
+INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/lmmi10.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/lmmi8.tfm
+INPUT ./32. hidden layers 18 - 15 - 12.png
+INPUT ./32. hidden layers 18 - 15 - 12.png
+INPUT ./32. hidden layers 18 - 15 - 12.png
+INPUT ./33. hidden layers 23 - 20 - 18.png
+INPUT ./33. hidden layers 23 - 20 - 18.png
+INPUT ./33. hidden layers 23 - 20 - 18.png
 INPUT ./report.aux

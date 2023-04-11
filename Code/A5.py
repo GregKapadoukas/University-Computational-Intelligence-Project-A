@@ -11,7 +11,6 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 import keras.backend as kb
-from tensorflow.keras import regularizers
 
 # Read CSV File With Pandas
 
@@ -58,7 +57,9 @@ sensor_measurements['Gender'] = sensor_measurements['Gender'].map({'Man':1, 'Wom
 for column in sensor_measurements.columns:
     sensor_measurements[column] = (sensor_measurements[column] - sensor_measurements[column].mean()) / (sensor_measurements[column].std())    
 
-num_hidden_neurons = 23
+num_l1_hidden_neurons = 23
+num_l2_hidden_neurons = 20
+num_l3_hidden_neurons = 18
 num_epochs = 100
 
 # +
@@ -76,7 +77,9 @@ for result in kf.split(preprocessed_df):
     model = keras.Sequential(
         [
             keras.Input(shape=(18)),
-            layers.Dense(num_hidden_neurons, activation='relu', kernel_regularizer=regularizers.L2(l2=0.1)),
+            layers.Dense(num_l1_hidden_neurons, activation='relu'),
+            layers.Dense(num_l2_hidden_neurons, activation='relu'),
+            layers.Dense(num_l3_hidden_neurons, activation='relu'),
             layers.Dense(5, activation='softmax')
         ]
     )
@@ -220,64 +223,64 @@ fold_epochs = [len(model_fit_history[0].history['loss']),
                len(model_fit_history[3].history['loss']), 
                len(model_fit_history[4].history['loss'])
                ]
-plt.plot(model_fit_history[0].history['categorical_crossentropy'])
-plt.plot(model_fit_history[1].history['categorical_crossentropy'])
-plt.plot(model_fit_history[2].history['categorical_crossentropy'])
-plt.plot(model_fit_history[3].history['categorical_crossentropy'])
-plt.plot(model_fit_history[4].history['categorical_crossentropy'])
-plt.title('CCE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
+plt.plot(model_fit_history[0].history['val_categorical_crossentropy'])
+plt.plot(model_fit_history[1].history['val_categorical_crossentropy'])
+plt.plot(model_fit_history[2].history['val_categorical_crossentropy'])
+plt.plot(model_fit_history[3].history['val_categorical_crossentropy'])
+plt.plot(model_fit_history[4].history['val_categorical_crossentropy'])
+plt.title('CCE Loss with Deep Neural Network')
 plt.ylabel('CCE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, max(fold_epochs), 1)
 #plt.xticks(x + 1)
 plt.xlim(1, max(fold_epochs))
-plt.legend(['Train Set CCE for Fold 1',
-            'Train Set CCE for Fold 2',
-            'Train Set CCE for Fold 3',
-            'Train Set CCE for Fold 4',
-            'Train Set CCE for Fold 5'
+plt.legend(['Validation Set CCE for Fold 1',
+            'Validation Set CCE for Fold 2',
+            'Validation Set CCE for Fold 3',
+            'Validation Set CCE for Fold 4',
+            'Validation Set CCE for Fold 5'
             ], loc='best')
 plt.xticks(np.arange(len(x)), np.arange(1, len(x)+1))
 plt.show()
 
 #Compare MSE for each epoch
-plt.plot(model_fit_history[0].history['mse'])
-plt.plot(model_fit_history[1].history['mse'])
-plt.plot(model_fit_history[2].history['mse'])
-plt.plot(model_fit_history[3].history['mse'])
-plt.plot(model_fit_history[4].history['mse'])
-plt.title('MSE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
+plt.plot(model_fit_history[0].history['val_mse'])
+plt.plot(model_fit_history[1].history['val_mse'])
+plt.plot(model_fit_history[2].history['val_mse'])
+plt.plot(model_fit_history[3].history['val_mse'])
+plt.plot(model_fit_history[4].history['val_mse'])
+plt.title('MSE Loss with Deep Neural Network')
 plt.ylabel('MSE Loss')
 plt.xlabel('Epoch')
 x = np.arange(0, max(fold_epochs), 1)
 #plt.xticks(x + 1)
 plt.xlim(1, max(fold_epochs))
-plt.legend(['Train Set MSE for Fold 1',
-            'Train Set MSE for Fold 2',
-            'Train Set MSE for Fold 3',
-            'Train Set MSE for Fold 4',
-            'Train Set MSE for Fold 5'
+plt.legend(['Validation Set MSE for Fold 1',
+            'Validation Set MSE for Fold 2',
+            'Validation Set MSE for Fold 3',
+            'Validation Set MSE for Fold 4',
+            'Validation Set MSE for Fold 5'
             ], loc='best')
 plt.xticks(np.arange(len(x)), np.arange(1, len(x)+1))
 plt.show()
 
 #Compare Accuracy for each epoch
-plt.plot(model_fit_history[0].history['categorical_accuracy'])
-plt.plot(model_fit_history[1].history['categorical_accuracy'])
-plt.plot(model_fit_history[2].history['categorical_accuracy'])
-plt.plot(model_fit_history[3].history['categorical_accuracy'])
-plt.plot(model_fit_history[4].history['categorical_accuracy'])
-plt.title('Accuracy with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
+plt.plot(model_fit_history[0].history['val_categorical_accuracy'])
+plt.plot(model_fit_history[1].history['val_categorical_accuracy'])
+plt.plot(model_fit_history[2].history['val_categorical_accuracy'])
+plt.plot(model_fit_history[3].history['val_categorical_accuracy'])
+plt.plot(model_fit_history[4].history['val_categorical_accuracy'])
+plt.title('Accuracy with Deep Neural Network')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
 x = np.arange(0, max(fold_epochs), 1)
 #plt.xticks(x + 1)
 plt.xlim(1, max(fold_epochs))
-plt.legend(['Train Set Accuracy Fold 1',
-            'Train Set Accuracy Fold 2',
-            'Train Set Accuracy Fold 3',
-            'Train Set Accuracy Fold 4',
-            'Train Set Accuracy Fold 5'
+plt.legend(['Validation Set Accuracy Fold 1',
+            'Validation Set Accuracy Fold 2',
+            'Validation Set Accuracy Fold 3',
+            'Validation Set Accuracy Fold 4',
+            'Validation Set Accuracy Fold 5'
             ], loc='best')
 plt.xticks(np.arange(len(x)), np.arange(1, len(x)+1))
 plt.show()
