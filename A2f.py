@@ -11,7 +11,6 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 import keras.backend as kb
-from tensorflow.keras import regularizers
 
 # Read CSV File With Pandas
 
@@ -76,7 +75,7 @@ for result in kf.split(preprocessed_df):
     model = keras.Sequential(
         [
             keras.Input(shape=(18)),
-            layers.Dense(num_hidden_neurons, activation='relu', kernel_regularizer=regularizers.L2(l2=0.1)),
+            layers.Dense(num_hidden_neurons, activation='relu'),
             layers.Dense(5, activation='softmax')
         ]
     )
@@ -86,7 +85,7 @@ for result in kf.split(preprocessed_df):
 
     model.compile(
         loss = keras.losses.CategoricalCrossentropy(),
-        optimizer = keras.optimizers.Adam(learning_rate = 0.001, beta_1=0.6, beta_2=0.999),
+        optimizer = keras.optimizers.Adam(learning_rate = 0.001),
         metrics = ["categorical_crossentropy", "mse", "categorical_accuracy"]
     )
 
@@ -139,7 +138,6 @@ print("Categorical CE: " + str(model_categorical_crossentropy) + ", MSE: " + str
 #Plot model results
 #Compare CCE for each epoch
 #Fold 1
-"""
 plt.plot(model_fit_history[0].history['categorical_crossentropy'])
 plt.plot(model_fit_history[0].history['val_categorical_crossentropy'])
 plt.title('Fold 1 - CCE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
@@ -214,12 +212,6 @@ plt.legend(['Train Set CCE for Fold 5',
 plt.xticks(np.arange(len(x)), np.arange(1, len(x)+1))
 plt.show()
 """
-fold_epochs = [len(model_fit_history[0].history['loss']), 
-               len(model_fit_history[1].history['loss']), 
-               len(model_fit_history[2].history['loss']), 
-               len(model_fit_history[3].history['loss']), 
-               len(model_fit_history[4].history['loss'])
-               ]
 plt.plot(model_fit_history[0].history['categorical_crossentropy'])
 plt.plot(model_fit_history[1].history['categorical_crossentropy'])
 plt.plot(model_fit_history[2].history['categorical_crossentropy'])
@@ -228,9 +220,9 @@ plt.plot(model_fit_history[4].history['categorical_crossentropy'])
 plt.title('CCE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
 plt.ylabel('CCE Loss')
 plt.xlabel('Epoch')
-x = np.arange(0, max(fold_epochs), 1)
+x = np.arange(0, num_epochs, 1)
 #plt.xticks(x + 1)
-plt.xlim(1, max(fold_epochs))
+plt.xlim(1,num_epochs)
 plt.legend(['Train Set CCE for Fold 1',
             'Train Set CCE for Fold 2',
             'Train Set CCE for Fold 3',
@@ -249,9 +241,9 @@ plt.plot(model_fit_history[4].history['mse'])
 plt.title('MSE Loss with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
 plt.ylabel('MSE Loss')
 plt.xlabel('Epoch')
-x = np.arange(0, max(fold_epochs), 1)
+x = np.arange(0, num_epochs, 1)
 #plt.xticks(x + 1)
-plt.xlim(1, max(fold_epochs))
+plt.xlim(1,num_epochs)
 plt.legend(['Train Set MSE for Fold 1',
             'Train Set MSE for Fold 2',
             'Train Set MSE for Fold 3',
@@ -270,9 +262,9 @@ plt.plot(model_fit_history[4].history['categorical_accuracy'])
 plt.title('Accuracy with ' + str(num_hidden_neurons) + ' Neurons in Hidden Layer')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
-x = np.arange(0, max(fold_epochs), 1)
+x = np.arange(0, num_epochs, 1)
 #plt.xticks(x + 1)
-plt.xlim(1, max(fold_epochs))
+plt.xlim(1,num_epochs)
 plt.legend(['Train Set Accuracy Fold 1',
             'Train Set Accuracy Fold 2',
             'Train Set Accuracy Fold 3',
@@ -282,7 +274,6 @@ plt.legend(['Train Set Accuracy Fold 1',
 plt.xticks(np.arange(len(x)), np.arange(1, len(x)+1))
 plt.show()
 
-"""
 #Plot mean fold CCE
 plt.plot(np.mean((model_fit_history[0].history['categorical_crossentropy'],
                 model_fit_history[1].history['categorical_crossentropy'],
@@ -333,5 +324,4 @@ x = np.arange(0, num_epochs, 1)
 #plt.xticks(x + 1)
 plt.xlim(1,num_epochs)
 plt.xticks(np.arange(len(x)), np.arange(1, len(x)+1))
-plt.show()
-"""
+plt.show()"""

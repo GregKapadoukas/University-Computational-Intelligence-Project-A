@@ -11,7 +11,6 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 import keras.backend as kb
-from tensorflow.keras import regularizers
 
 # Read CSV File With Pandas
 
@@ -76,7 +75,7 @@ for result in kf.split(preprocessed_df):
     model = keras.Sequential(
         [
             keras.Input(shape=(18)),
-            layers.Dense(num_hidden_neurons, activation='relu', kernel_regularizer=regularizers.L2(l2=0.1)),
+            layers.Dense(num_hidden_neurons, activation='relu'),
             layers.Dense(5, activation='softmax')
         ]
     )
@@ -86,7 +85,7 @@ for result in kf.split(preprocessed_df):
 
     model.compile(
         loss = keras.losses.CategoricalCrossentropy(),
-        optimizer = keras.optimizers.Adam(learning_rate = 0.001, beta_1=0.6, beta_2=0.999),
+        optimizer = keras.optimizers.Adam(learning_rate = 0.1, beta_1=0.6, beta_2=0.999),
         metrics = ["categorical_crossentropy", "mse", "categorical_accuracy"]
     )
 
